@@ -1,8 +1,34 @@
 import { useRef, useEffect } from "react";
 
-export default function CountryPanel({ country, onClose }: any) {
-  const modalRef = useRef<HTMLDivElement>(null);
+type Currency = {
+  name: string;
+  symbol?: string;
+};
 
+type Country = {
+  name: {
+    common: string;
+  };
+  flags: {
+    svg: string;
+  };
+  capital?: string[];
+  region: string;
+  population: number;
+  currencies?: Record<string, Currency>;
+  maps: {
+    googleMaps: string;
+  };
+};
+
+interface CountryPanelProps {
+  country: Country;
+  onClose: () => void;
+}
+
+export default function CountryPanel({ country, onClose }: CountryPanelProps) {
+  const modalRef = useRef<HTMLDivElement>(null);
+  
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
@@ -60,8 +86,8 @@ export default function CountryPanel({ country, onClose }: any) {
             <div className="bg-white/5 p-4 rounded-xl border border-white/5 hover:bg-white/10 transition-colors col-span-2">
               <span className="text-xs text-emerald-300 uppercase font-semibold">Currency</span>
               <p className="text-lg mt-1">
-                 {Object.values(country.currencies || {})[0]?.name || 'N/A'} 
-                 <span className="opacity-50 ml-2">({(Object.values(country.currencies || {})[0] as any)?.symbol || ''})</span>
+                 {country.currencies && Object.values(country.currencies)[0]?.name ? Object.values(country.currencies)[0].name : 'N/A'} 
+                 <span className="opacity-50 ml-2">({country.currencies && Object.values(country.currencies)[0]?.symbol ? Object.values(country.currencies)[0].symbol : ''})</span>
               </p>
             </div>
           </div>
