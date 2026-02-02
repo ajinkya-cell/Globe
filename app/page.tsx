@@ -8,19 +8,13 @@ export default function Page() {
   const [country, setCountry] = useState(null);
 
   return (
-    <main className="flex h-screen bg-black overflow-hidden">
-      <div
-        className={`transition-all duration-700 ${
-          country ? "w-1/3" : "w-full"
-        }`}
-      >
-        <GlobeView onCountrySelect={setCountry} />
+    <main className="relative h-screen w-full bg-black overflow-hidden">
+      <div className="absolute inset-0 z-0">
+        <GlobeView onCountrySelect={setCountry} selectedCountry={country} />
       </div>
 
       {country && (
-        <div className="animate-slide-in">
-          <CountryPanel country={country} />
-        </div>
+        <CountryPanel country={country} onClose={() => setCountry(null)} />
       )}
     </main>
   );

@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { loadCountries } from "@/lib/geojson";
 import { getCountryInfo } from "@/lib/countries";
 
-export default function GlobeView({ onCountrySelect }: any) {
+export default function GlobeView({ onCountrySelect, selectedCountry }: any) {
   const globeRef = useRef<any>();
   const [countries, setCountries] = useState([]);
   const [hoverD, setHoverD] = useState<any>(null);
@@ -19,6 +19,12 @@ export default function GlobeView({ onCountrySelect }: any) {
     });
   }, []);
 
+  useEffect(() => {
+    if (!selectedCountry && globeRef.current) {
+      globeRef.current.controls().autoRotate = true;
+    }
+  }, [selectedCountry]);
+
   return (
     <Globe
       ref={globeRef}
@@ -28,12 +34,12 @@ export default function GlobeView({ onCountrySelect }: any) {
       backgroundColor="#000"
       polygonsData={countries}
       polygonCapColor={(d: any) =>
-        d === hoverD ? "rgba(70, 130, 180, 0.6)" : "rgba(200, 0, 0, 0.6)"
+        d === hoverD ? "rgba(255, 215, 0, 0.3)" : "rgba(0, 0, 0, 0)"
       }
-      polygonSideColor={() => "rgba(0, 100, 0, 0.15)"}
-      polygonStrokeColor={() => "#111"}
+      polygonSideColor={() => "rgba(0, 0, 0, 0)"}
+      polygonStrokeColor={() => "rgba(255, 255, 255, 0.2)"}
       polygonLabel={({ properties: d }: any) => `
-        <div style="background: rgba(0,0,0,0.8); padding: 5px 10px; border-radius: 4px; color: white; font-family: sans-serif;">
+        <div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(4px); padding: 5px 10px; border-radius: 4px; color: white; font-family: sans-serif; border: 1px solid rgba(255, 255, 255, 0.2);">
           ${d.ADMIN || d.NAME}
         </div>
       `}
@@ -56,6 +62,7 @@ export default function GlobeView({ onCountrySelect }: any) {
         if (globeRef.current) {
           globeRef.current.controls().autoRotate = true;
           globeRef.current.controls().autoRotateSpeed = 0.6;
+          globeRef.current.pointOfView({ altitude: 1.5 });
         }
       }}
     />
