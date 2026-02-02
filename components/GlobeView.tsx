@@ -62,7 +62,7 @@ export default function GlobeView({ onCountrySelect, selectedCountry }: any) {
         if (globeRef.current) {
           globeRef.current.controls().autoRotate = true;
           globeRef.current.controls().autoRotateSpeed = 0.6;
-          globeRef.current.pointOfView({ altitude: 1.5 });
+          globeRef.current.pointOfView({ altitude: 2.5 });
         }
       }}
     />

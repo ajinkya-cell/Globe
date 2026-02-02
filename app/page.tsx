@@ -13,6 +13,15 @@ export default function Page() {
         <GlobeView onCountrySelect={setCountry} selectedCountry={country} />
       </div>
 
+      <div className="absolute top-0 left-0 z-50 p-8 pointer-events-none">
+        <h1 className="font-mono text-2xl text-white tracking-tight select-none border-b border-white/30 pb-2">
+          GEOGRAPHY-101
+        </h1>
+        <div>
+          
+        </div>
+      </div>
+
       {country && (
         <CountryPanel country={country} onClose={() => setCountry(null)} />
       )}
