@@ -8,8 +8,8 @@ import { loadCountries } from "@/lib/geojson";
 import { getCountryInfo } from "@/lib/countries";
 
 export default function GlobeView({ onCountrySelect, selectedCountry }: any) {
-  const globeRef = useRef<any>();
-  const [countries, setCountries] = useState([]);
+  const globeRef = useRef<any>(null);
+  const [countries, setCountries] = useState<any[]>([]);
   const [hoverD, setHoverD] = useState<any>(null);
 
   useEffect(() => {
